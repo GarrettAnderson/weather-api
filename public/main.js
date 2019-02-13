@@ -1,10 +1,13 @@
 let currentWeather = {}
+let zipcode = []
+let city = []
 const apiKey = 'aa1b094472a96c37a26f10903aedb34d'
+
 // user inputs a zip code or city name
 
 // click search button to query api
 const getWeatherByZip = () => {
-  let zipcode = document.querySelector('.search-weather').value
+  zipcode = document.querySelector('.search-weather').value
   fetch('http://api.openweathermap.org/data/2.5/weather?zip=' + zipcode + '&appid=' + apiKey + '&units=imperial')
     .then((resp) => {
       return resp.json()
@@ -12,17 +15,17 @@ const getWeatherByZip = () => {
     // open the package
     .then((zip) => {
       currentWeather = zip
-      // set local storage to save the zipcode
-      localStorage.setItem('zip', zipcode)
-      console.log(localStorage)
       console.log(currentWeather)
       document.querySelector('.current-weather-display').textContent =
         currentWeather.weather[0].main + ' - ' + currentWeather.weather[0].description
     })
+  // set local storage to save the zipcode
+  localStorage.setItem('zip', zipcode)
+  console.log(localStorage)
 }
 
 const getWeatherByCity = () => {
-  let city = document.querySelector('.search-weather-city').value
+  city = document.querySelector('.search-weather-city').value
   fetch('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey + '&units=imperial')
     .then((resp) => {
       return resp.json()
@@ -44,6 +47,9 @@ const main = () => {
   }
   let watchId = navigator.geolocation.watchPosition(geo_success)
   console.log(watchId)
+  // set local storage to save the zipcode
+  // localStorage.setItem('zip', zipcode)
+  // console.log(localStorage)
 }
 
 // const determineZipOrCity = () => {
